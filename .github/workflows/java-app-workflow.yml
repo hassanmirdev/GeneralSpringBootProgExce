@@ -57,25 +57,31 @@ jobs:
       uses: medyagh/setup-minikube@master
 
     - name: Try the cluster !
-      run: kubectl get pods -A
-      
-    - name: Build image
+      run: |
+       kubectl get pods -A
+       kubectl get nodes
+    
+    - name: Build image and push to Docker Hub.
       run: |
           export SHELL=/bin/bash
           eval $(minikube -p minikube docker-env)
-          docker build -t hassan1049/myapp:v2 .
-          docker push hassan1049/myapp:v2
-          echo -n "verifying images:"
-          docker images      
+          docker build -t hassan1049/myapp:v3 .
+          docker push hassan1049/myapp:v3
+          
+    - name: Docker images 
+      run: |
+       echo -n "verifying images:"
+       docker images      
+    
     - name: Deploy to minikube
       run: |
          kubectl apply -f deployment.yaml
          kubectl apply -f service.yaml
-    - name: Delay for 5 minutes
+    - name: Delay for 3 minutes
       run: |
-        echo "Waiting for 5 minutes..."
-        sleep 300  # Sleep for 300 seconds (5 minutes)
-    - name: Try the cluster !
+        echo "Waiting for 3 minutes..."
+        sleep 180  # Sleep for 300 seconds (5 minutes)
+    - name: Check Pod Status
       run: |
        kubectl get pods -A
        kubectl get pods
@@ -94,7 +100,7 @@ jobs:
 
        
       
-    # - name: Test service URLs
-     # run: |
-      # minikube service list
+    - name: Test service URLs
+      run: |
+       minikube service list
        # minikube service myapp-service --url
