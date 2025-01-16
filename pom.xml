@@ -6,7 +6,7 @@
     <groupId>com.hcl.vamsi</groupId>
     <artifactId>GeneralProgExec</artifactId>
     <version>2.0.0-SNAPSHOT</version>
-    <packaging>war</packaging> <!-- Change to "war" if it's intended to be a web application -->
+    <packaging>war</packaging> <!-- Change to "jar" if you prefer a jar application -->
 
     <name>GeneralProgExec</name>
     <description>GeneralProgExec project for Spring Boot</description>
@@ -14,7 +14,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.0</version> <!-- Upgraded to a more recent stable version -->
+        <version>2.7.10</version> <!-- Updated to a more recent stable version -->
         <relativePath /> <!-- lookup parent from repository -->
     </parent>
 
@@ -23,8 +23,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>17</java.version> <!-- Keep Java version set to 17 -->
         <sonar.host.url>http://74.176.120.228:9000/</sonar.host.url>
-        <sonar.login>admin</sonar.login>
-        <sonar.password>Nov@12345678</sonar.password>
+        <sonar.login>${env.SONAR_TOKEN}</sonar.login> <!-- Externalize sensitive info -->
     </properties>
 
     <dependencies>
@@ -45,16 +44,16 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-tomcat -->
+        <!-- Optional: Exclude Tomcat if not using an embedded container -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope> <!-- Mark it as provided if you want to exclude embedded Tomcat -->
         </dependency>
     </dependencies>
 
@@ -64,7 +63,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version> <!-- Use a compatible version -->
+                <version>3.8.1</version>
                 <configuration>
                     <source>17</source> <!-- Java source version -->
                     <target>17</target> <!-- Java target version -->
@@ -75,6 +74,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.7.10</version> <!-- Align with Spring Boot version -->
             </plugin>
         </plugins>
     </build>
