@@ -1,7 +1,6 @@
 name: Expressions
 
 on:
- push:
  workflow_dispatch:
   inputs: 
    debug:
