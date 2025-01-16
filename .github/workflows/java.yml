@@ -1,6 +1,6 @@
 name: java based workflow
 on:
- push
+ workflow_dispatch:
 jobs:
  echo-triggers:
   runs-on: ubuntu-latest
