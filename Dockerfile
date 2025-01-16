@@ -1,5 +1,5 @@
-# Step 1: Use an official Maven image to build the WAR file
-FROM maven:3.8.4-openjdk-11-slim AS build
+# Step 1: Use an official Maven image with OpenJDK 17 to build the application
+FROM maven:3.8.4-openjdk-17-slim AS build
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -11,8 +11,8 @@ COPY src ./src
 # Run Maven to build the application and create the WAR file
 RUN mvn clean package -DskipTests
 
-# Step 2: Use a smaller OpenJDK image for running the WAR file
-FROM openjdk:11-jre-slim
+# Step 2: Use a smaller OpenJDK 17 image for running the WAR file
+FROM openjdk:17-jre-slim
 
 # Set the working directory for the final image
 WORKDIR /app
