@@ -12,13 +12,12 @@ COPY src ./src
 RUN mvn clean package -DskipTests
 
 # Step 2: Use a smaller OpenJDK 17 image for running the WAR file
-FROM openjdk:17-slim  # Changed from openjdk:17-jre-slim to openjdk:17-slim
+FROM openjdk:17-slim  # Corrected the FROM statement
 
 # Set the working directory for the final image
 WORKDIR /app
 
 # Copy the WAR file from the build stage into the final image
-# The path '/app/target/vprofile-v2.war' is where Maven typically places the WAR file after the build
 COPY --from=build /app/target/vprofile-v2.war /app/vprofile-v2.war
 
 # Expose port 8080 (adjust if your app uses a different port)
